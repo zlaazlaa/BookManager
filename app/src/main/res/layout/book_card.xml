@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/book_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/book_id"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="20dp"
-                android:gravity="center"
                 android:layout_gravity="center"
-                android:paddingRight="10dp"/>
-
+                android:gravity="center"
+                android:paddingRight="10dp"
+                android:text="1"
+                android:textSize="20dp" />
 
 
             <ImageView
@@ -106,11 +106,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="在架" />
+
                     <TextView
                         android:id="@+id/book_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4D5" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/book_id_in_db"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="11"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -119,4 +133,4 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

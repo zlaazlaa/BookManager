@@ -144,8 +144,6 @@ class AddBook : AppCompatActivity() {
                 if (resultCode == Activity.RESULT_OK) {
                     val bitmap =
                         BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
-
-//TODO(aiscbasuicguia压缩压缩压缩压缩压缩压缩压缩压缩scgbiascuasgbuicauicasuicasbuicasuicbasuicbuias压缩压缩)
                     findViewById<ImageView>(R.id.book_picture).setImageBitmap(
                         rotateIfRequired(
                             bitmap

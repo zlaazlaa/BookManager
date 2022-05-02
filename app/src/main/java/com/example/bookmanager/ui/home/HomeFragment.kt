@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookmanager.AddBook
+import com.example.bookmanager.BookCardLayout
 import com.example.bookmanager.R
 import com.example.bookmanager.SQLite.Book
 import com.example.bookmanager.SQLite.MyDatabaseHelper
@@ -31,8 +32,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
 
     private val bookList = ArrayList<Book>()
-
-
 
 
     private var dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
@@ -168,8 +167,9 @@ class HomeFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.book_card, parent, false)
+//            val view =
+//                LayoutInflater.from(parent.context).inflate(R.layout.book_card, parent, false)
+            val view = BookCardLayout(context)
             val viewHolder = ViewHolder(view)
             viewHolder.bookPicture.setOnClickListener {
                 val bitmap = (viewHolder.bookPicture.drawable as BitmapDrawable).bitmap
