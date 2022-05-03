@@ -17,28 +17,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:ignore="Suspicious0dp"
             android:paddingLeft="6dp"
-            android:paddingRight="6dp">
+            android:paddingRight="6dp"
+            tools:ignore="Suspicious0dp">
 
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginStart="10dp"
-            android:id="@+id/book_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="4">
 
-            <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
+            android:id="@+id/book_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/book_type_to_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="图书类型"
+                android:textSize="25dp" />
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/book_list_to_show"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

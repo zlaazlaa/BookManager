@@ -54,11 +54,12 @@
     <connection id="b8442f73-b82c-4ef0-b52c-663726b64ddf">
       <console name="Connection 8" type="STANDARD" schema="main" session="Main" />
     </connection>
+    <connection id="d2c1ee68-c346-42d3-9f1b-7ede2c3babd5">
+      <console name="Connection 9" type="STANDARD" schema="main" session="Main" />
+    </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="b8442f73-b82c-4ef0-b52c-663726b64ddf" object-ref="schemas/main/tables/Book" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="3af2637c-a272-4e1e-9812-c901a126c45d" />
@@ -70,17 +71,19 @@
     <connection id="b0d26df8-c0bf-4c71-81ac-713a35034c96" />
     <connection id="4d0da509-897d-42bb-9609-e54264d8299d" />
     <connection id="b8442f73-b82c-4ef0-b52c-663726b64ddf" />
+    <connection id="d2c1ee68-c346-42d3-9f1b-7ede2c3babd5" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="b0d26df8-c0bf-4c71-81ac-713a35034c96" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="b8442f73-b82c-4ef0-b52c-663726b64ddf" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a6f30a49-bd44-4821-8438-6c4f2fd41a93" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e5856eab-f950-4187-a3d0-30b1fe2f59e0" dataset="main.android_metadata" active-filter-id="" />
     <filter-actions connection-id="e5856eab-f950-4187-a3d0-30b1fe2f59e0" dataset="main.Book" active-filter-id="ce5daa06-d955-40a7-8684-d8f94bb610d8">
       <filter id="ce5daa06-d955-40a7-8684-d8f94bb610d8" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
-    <filter-actions connection-id="a6f30a49-bd44-4821-8438-6c4f2fd41a93" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="b8442f73-b82c-4ef0-b52c-663726b64ddf" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="d2c1ee68-c346-42d3-9f1b-7ede2c3babd5" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="731b284d-0e2c-42c1-b1e9-b95dc4fe354e" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="332f70ea-11da-49c9-beb2-b1faa890eef0" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4d0da509-897d-42bb-9609-e54264d8299d" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
@@ -828,6 +831,93 @@
           <database value="" />
           <files>
             <file path="C:\Users\zlaa\Desktop\BookStore8.db" schema="main" />
+          </files>
+          <type value="NONE" />
+          <user value="" />
+          <deprecated-pwd value="" />
+        </database>
+        <properties>
+          <auto-commit value="false" />
+        </properties>
+        <ssh-settings>
+          <active value="false" />
+          <proxy-host value="" />
+          <proxy-port value="22" />
+          <proxy-user value="" />
+          <deprecated-proxy-pwd value="" />
+          <auth-type value="PASSWORD" />
+          <key-file value="" />
+          <key-passphrase value="" />
+        </ssh-settings>
+        <ssl-settings>
+          <active value="false" />
+          <certificate-authority-file value="" />
+          <client-certificate-file value="" />
+          <client-key-file value="" />
+        </ssl-settings>
+        <details>
+          <charset value="UTF-8" />
+          <session-management value="true" />
+          <ddl-file-binding value="true" />
+          <database-logging value="true" />
+          <connect-automatically value="true" />
+          <restore-workspace value="true" />
+          <restore-workspace-deep value="false" />
+          <environment-type value="default" />
+          <connectivity-timeout value="5" />
+          <idle-time-to-disconnect value="30" />
+          <idle-time-to-disconnect-pool value="5" />
+          <credential-expiry-time value="10" />
+          <max-connection-pool-size value="7" />
+          <alternative-statement-delimiter value="" />
+        </details>
+        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false">
+          <object-type-filter use-master-settings="true">
+            <object-type name="SCHEMA" enabled="true" />
+            <object-type name="USER" enabled="true" />
+            <object-type name="ROLE" enabled="true" />
+            <object-type name="PRIVILEGE" enabled="true" />
+            <object-type name="CHARSET" enabled="true" />
+            <object-type name="TABLE" enabled="true" />
+            <object-type name="VIEW" enabled="true" />
+            <object-type name="MATERIALIZED_VIEW" enabled="true" />
+            <object-type name="NESTED_TABLE" enabled="true" />
+            <object-type name="COLUMN" enabled="true" />
+            <object-type name="INDEX" enabled="true" />
+            <object-type name="CONSTRAINT" enabled="true" />
+            <object-type name="DATASET_TRIGGER" enabled="true" />
+            <object-type name="DATABASE_TRIGGER" enabled="true" />
+            <object-type name="SYNONYM" enabled="true" />
+            <object-type name="SEQUENCE" enabled="true" />
+            <object-type name="PROCEDURE" enabled="true" />
+            <object-type name="FUNCTION" enabled="true" />
+            <object-type name="PACKAGE" enabled="true" />
+            <object-type name="TYPE" enabled="true" />
+            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
+            <object-type name="ARGUMENT" enabled="true" />
+            <object-type name="DIMENSION" enabled="true" />
+            <object-type name="CLUSTER" enabled="true" />
+            <object-type name="DBLINK" enabled="true" />
+          </object-type-filter>
+          <object-name-filters />
+        </object-filters>
+      </connection>
+      <connection id="d2c1ee68-c346-42d3-9f1b-7ede2c3babd5" active="true" signed="false">
+        <database>
+          <name value="Connection 9" />
+          <description value="" />
+          <database-type value="SQLITE" />
+          <config-type value="BASIC" />
+          <database-version value="3.3" />
+          <driver-source value="BUILTIN" />
+          <driver-library value="" />
+          <driver value="" />
+          <url-type value="FILE" />
+          <host value="" />
+          <port value="" />
+          <database value="" />
+          <files>
+            <file path="C:\Users\zlaa\Desktop\BookStore9.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

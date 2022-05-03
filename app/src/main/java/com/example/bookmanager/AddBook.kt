@@ -13,22 +13,28 @@ import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
-import android.widget.*
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.updateLayoutParams
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.bookmanager.SQLite.MyDatabaseHelper
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.internal.ContextUtils.getActivity
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.security.AccessController.getContext
 
 
 class AddBook : AppCompatActivity() {
@@ -37,6 +43,7 @@ class AddBook : AppCompatActivity() {
     private lateinit var outputImage: File
     private val dbHelper = MyDatabaseHelper(this, "BookStore.db", 2)
 
+    @RequiresApi(Build.VERSION_CODES.R)
     @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,8 +72,8 @@ class AddBook : AppCompatActivity() {
             val bookPictureBitmap =
                 (findViewById<ImageView>(R.id.book_picture).drawable as BitmapDrawable).bitmap
             val os = ByteArrayOutputStream()
-            bookPictureBitmap.compress(Bitmap.CompressFormat.JPEG, 50, os)
-            os.close()
+            bookPictureBitmap.compress(Bitmap.CompressFormat.JPEG, 70, os)
+
 
             val value = ContentValues().apply {
                 put("book_name", bookName)
@@ -76,6 +83,7 @@ class AddBook : AppCompatActivity() {
                 put("book_statement", 1)
                 put("book_picture", os.toByteArray())
             }
+            os.close()
             val db = dbHelper.writableDatabase
             db.insert("Book", null, value)
             Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show()
@@ -121,10 +129,13 @@ class AddBook : AppCompatActivity() {
 
 
     //方法里直接实例化一个imageView不用xml文件，传入bitmap设置图片
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun bigImageLoader(bitmap: Bitmap) {
         val dialog = Dialog(this)
         val image = ImageView(this)
+
         image.setImageBitmap(bitmap)
+
         dialog.setContentView(image)
         //将dialog周围的白块设置为透明
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -142,13 +153,18 @@ class AddBook : AppCompatActivity() {
         when (requestCode) {
             takePhoto -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val bitmap =
-                        BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
-                    findViewById<ImageView>(R.id.book_picture).setImageBitmap(
-                        rotateIfRequired(
-                            bitmap
-                        )
-                    )
+//                    var bitmap =
+//                        BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
+////                    findViewById<ImageView>(R.id.book_picture).setImageBitmap(
+//                    bitmap = rotateIfRequired(bitmap)
+//                    )
+                    Glide.with(this)
+                        .load(imageUri)//图片路径
+                        .asBitmap()
+                        .skipMemoryCache(true)//跳过内存缓存
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)//不要在disk硬盘缓存
+                        .override(1080, 1920)
+                        .into(findViewById(R.id.book_picture));//图片控件
                 }
             }
         }
