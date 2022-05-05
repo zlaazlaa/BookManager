@@ -4,7 +4,8 @@
     android:id="@+id/book_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/book_id"
@@ -24,7 +25,7 @@
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:src="@drawable/book" />
+        android:src="@drawable/transparent" />
 
     <LinearLayout
         android:layout_width="match_parent"

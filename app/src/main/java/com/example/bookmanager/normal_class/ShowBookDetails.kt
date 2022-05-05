@@ -1,4 +1,4 @@
-package com.example.bookmanager
+package com.example.bookmanager.normal_class
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -9,7 +9,8 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.bookmanager.MyApplication.Companion.context
+import com.example.bookmanager.R
+import com.example.bookmanager.normal_class.MyApplication.Companion.context
 import com.example.bookmanager.SQLite.Book
 import com.example.bookmanager.SQLite.MyDatabaseHelper
 

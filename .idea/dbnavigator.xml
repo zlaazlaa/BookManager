@@ -75,14 +75,14 @@
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="b0d26df8-c0bf-4c71-81ac-713a35034c96" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="a6f30a49-bd44-4821-8438-6c4f2fd41a93" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="b8442f73-b82c-4ef0-b52c-663726b64ddf" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e5856eab-f950-4187-a3d0-30b1fe2f59e0" dataset="main.android_metadata" active-filter-id="" />
     <filter-actions connection-id="e5856eab-f950-4187-a3d0-30b1fe2f59e0" dataset="main.Book" active-filter-id="ce5daa06-d955-40a7-8684-d8f94bb610d8">
       <filter id="ce5daa06-d955-40a7-8684-d8f94bb610d8" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
-    <filter-actions connection-id="b8442f73-b82c-4ef0-b52c-663726b64ddf" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a6f30a49-bd44-4821-8438-6c4f2fd41a93" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="d2c1ee68-c346-42d3-9f1b-7ede2c3babd5" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="731b284d-0e2c-42c1-b1e9-b95dc4fe354e" dataset="main.Book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="332f70ea-11da-49c9-beb2-b1faa890eef0" dataset="main.Book" active-filter-id="EMPTY_FILTER" />

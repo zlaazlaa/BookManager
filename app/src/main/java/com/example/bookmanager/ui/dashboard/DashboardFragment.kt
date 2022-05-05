@@ -6,11 +6,13 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -18,11 +20,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.bookmanager.BookCardLayout
 import com.example.bookmanager.R
 import com.example.bookmanager.SQLite.Book
-import com.example.bookmanager.SQLite.MyDatabaseHelper
+import com.example.bookmanager.SQLite.DataSelected
 import com.example.bookmanager.databinding.FragmentDashboardBinding
+import com.example.bookmanager.normal_class.BookCardLayout
+import com.example.bookmanager.normal_class.SqliteClass
 import com.google.android.material.button.*
 import java.io.ByteArrayOutputStream
 
@@ -35,9 +38,15 @@ class DashboardFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val bookList = ArrayList<Book>()
+    val handler: Handler = Handler()
 
-    private var dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
+    private var bookList = ArrayList<Book>()
+
+    private var dbHelper = activity?.let { SqliteClass().getDbHelper(it) }
+
+    private val temp = SqliteClass()//实例化对象，为了获得静态数据
+
+    private val bookTypeButton = ArrayList<Button>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +58,8 @@ class DashboardFragment : Fragment() {
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        dbHelper = activity?.let { temp.getDbHelper(it) }
 
 //        val textView: TextView = binding.textDashboard
 //        dashboardViewModel.text.observe(viewLifecycleOwner) {
@@ -62,71 +73,142 @@ class DashboardFragment : Fragment() {
         _binding = null
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return super.onCreateAnimation(transit, enter, nextAnim)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        activity?.let { it1 -> DataSelected().updateAllBooks(it1) }
+        bookList = DataSelected().getBookList()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
     }
 
     @SuppressLint("Range", "ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val db = dbHelper.writableDatabase
+        val db = dbHelper?.writableDatabase
         val hashMap = HashMap<String, Int>()
 //        val cursor = db.query("Book", arrayOf("book_type"), null, null, null, null, null)
-        val cursor = db.rawQuery("SELECT DISTINCT book_type FROM Book", null)
+        val cursor = db?.rawQuery("SELECT DISTINCT book_type FROM Book", null)
         var count = 0
-        if (cursor.moveToFirst()) {
-            do {
-                val bookType = cursor.getString(cursor.getColumnIndex("book_type"))
-                if (count == 0) {
-                    showTypeList(bookType)
-                    count++
-                }
-                val btn = activity?.let { MaterialButton(it) }
-                btn?.text = bookType
-                btn?.id = count
-                btn?.textSize = 20F
-                btn?.setOnClickListener {
-                    val text = btn.text
-                    showTypeList(text as String)
-                }
-                view.findViewById<LinearLayout>(R.id.book_type_list).addView(btn)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    val bookType = cursor.getString(cursor.getColumnIndex("book_type"))
+                    if (count == 0) {
+                        showTypeList(bookType)
+                        count++
+                    }
+                    val btn = activity?.let { MaterialButton(it) }
+                    btn?.text = bookType
+    //                btn?.id = count
+    //                btn?.textSize = 20F
+    //                btn?.setOnClickListener {
+    //                    val text = btn.text
+    //                    showTypeList(text as String)
+    //                }
+                    if (btn != null) {
+                        bookTypeButton.add(btn)
+                    }
 
-            } while (cursor.moveToNext())
+    //                view.findViewById<LinearLayout>(R.id.book_type_list).addView(btn)
+
+                } while (cursor.moveToNext())
+            }
         }
-        cursor.close()
+        cursor?.close()
+
+        val layoutManager = LinearLayoutManager(activity)
+        val typeRecycleView = view.findViewById<RecyclerView>(R.id.book_type_list)
+        typeRecycleView.layoutManager = layoutManager
+        val adapter = BookTypeButtonAdapter(bookTypeButton)
+        typeRecycleView.adapter = adapter
+        //下面是滑动时Glide停止加载，好像用处不大
+//        typeRecycleView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    Glide.with(activity).resumeRequests() //恢复Glide加载图片
+//                } else {
+//                    Glide.with(activity).pauseRequests() //禁止Glide加载图片
+//                }
+//            }
+//        })
     }
+
+    inner class BookTypeButtonAdapter(val bookTypeButton: ArrayList<Button>) :
+        RecyclerView.Adapter<BookTypeButtonAdapter.ViewHolder>() {
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val button: MaterialButton = view.findViewById(R.id.book_type_name)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.book_type_button, parent, false)
+            return ViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val bookType = bookTypeButton[position]
+            holder.button.text = bookType.text
+            holder.button.setOnClickListener {
+                val text = holder.button.text
+
+                handler.post(Runnable { //这里写你原来要执行的业务逻辑
+                    showTypeList(text as String)
+                })
+            }
+        }
+
+        override fun getItemCount(): Int {
+            return bookTypeButton.size
+        }
+    }
+
 
     @SuppressLint("Range", "Recycle")
     fun showTypeList(bookTypeToShow: String) {
         view?.findViewById<TextView>(R.id.book_type_to_show)?.text = bookTypeToShow
         bookList.clear()
-        val db = dbHelper.writableDatabase
+        val db = dbHelper?.writableDatabase
         val cursor =
-            db.query("Book", null, "book_type" + "=?", arrayOf(bookTypeToShow), null, null, null)
-        if (cursor.moveToFirst()) {
-            do {
-                val id = cursor.getInt(cursor.getColumnIndex("id"))
-                val bookName = cursor.getString(cursor.getColumnIndex("book_name"))
-                val authorName = cursor.getString(cursor.getColumnIndex("author_name"))
-                val bookType = cursor.getString(cursor.getColumnIndex("book_type"))
-                val bookAddress = cursor.getString(cursor.getColumnIndex("book_address"))
-                val bookStatement = cursor.getInt(cursor.getColumnIndex("book_statement"))
-                val bookPicture = cursor.getBlob(cursor.getColumnIndex("book_picture"))
-                val bookPictureBitmap =
-                    BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size)
-                bookList.add(
-                    Book(
-                        id,
-                        bookName,
-                        authorName,
-                        bookType,
-                        bookAddress,
-                        bookStatement,
-                        bookPictureBitmap
+            db?.query("Book", null, "book_type" + "=?", arrayOf(bookTypeToShow), null, null, null)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    val id = cursor.getInt(cursor.getColumnIndex("id"))
+                    val bookName = cursor.getString(cursor.getColumnIndex("book_name"))
+                    val authorName = cursor.getString(cursor.getColumnIndex("author_name"))
+                    val bookType = cursor.getString(cursor.getColumnIndex("book_type"))
+                    val bookAddress = cursor.getString(cursor.getColumnIndex("book_address"))
+                    val bookStatement = cursor.getInt(cursor.getColumnIndex("book_statement"))
+                    val bookPicture = cursor.getBlob(cursor.getColumnIndex("book_picture"))
+                    val bookPictureBitmap =
+                        BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size)
+                    bookList.add(
+                        Book(
+                            id,
+                            bookName,
+                            authorName,
+                            bookType,
+                            bookAddress,
+                            bookStatement,
+                            bookPictureBitmap
+                        )
                     )
-                )
-            } while (cursor.moveToNext())
+                } while (cursor.moveToNext())
+            }
         }
         val layoutManager = LinearLayoutManager(activity)
         val recyclerView: RecyclerView =
@@ -144,17 +226,18 @@ class DashboardFragment : Fragment() {
 //        val width = wm.defaultDisplay.width
 //        val height = wm.defaultDisplay.height
 //        image.layoutParams = ViewGroup.LayoutParams(1080, 1920)
-        val dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
-        val db = dbHelper.writableDatabase
-        val cursor = db.rawQuery("select * from book where id = ?", arrayOf(id))
-        if (cursor.moveToFirst()) {
-            do {
-                val bookPicture = cursor.getBlob(cursor.getColumnIndex("book_picture"))
-                val opts = BitmapFactory.Options()
-                opts.inJustDecodeBounds = false //为true时，返回的bitmap为null
-                val bitmap = BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size, opts)
-                image1212.setImageBitmap(bitmap)
-            } while (cursor.moveToNext())
+        val db = dbHelper?.writableDatabase
+        val cursor = db?.rawQuery("select * from book where id = ?", arrayOf(id))
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    val bookPicture = cursor.getBlob(cursor.getColumnIndex("book_picture"))
+                    val opts = BitmapFactory.Options()
+                    opts.inJustDecodeBounds = false //为true时，返回的bitmap为null
+                    val bitmap = BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size, opts)
+                    image1212.setImageBitmap(bitmap)
+                } while (cursor.moveToNext())
+            }
         }
 
         dialog?.setContentView(image1212)

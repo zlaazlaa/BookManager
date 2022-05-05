@@ -1,16 +1,11 @@
-package com.example.bookmanager
+package com.example.bookmanager.normal_class
 
 import android.content.Context
 import android.content.Intent
-import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View.OnClickListener
-import android.view.ViewParent
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.Nullable
-import androidx.appcompat.app.AppCompatActivity
+import com.example.bookmanager.R
 
 
 class BookCardLayout(context: Context?) :
