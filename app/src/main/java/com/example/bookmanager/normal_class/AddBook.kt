@@ -85,6 +85,9 @@ class AddBook : AppCompatActivity() {
             val db = dbHelper.writableDatabase
             db.insert("Book", null, value)
             Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show()
+            val intent = Intent()
+            intent.putExtra("refresh_code", "add_a_book")
+            setResult(RESULT_OK, intent)
             finish()
         }
 

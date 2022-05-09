@@ -18,8 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="25dp"
@@ -35,12 +35,33 @@
                 android:textSize="30dp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="图书编号"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/book_id_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp">
+
+            </TextView>
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="7dp">
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="90dp"
@@ -60,8 +81,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="7dp">
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="90dp"
@@ -82,12 +103,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="7dp">
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="90dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="图书类型"
                 android:textSize="20dp" />
 
@@ -101,10 +122,32 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/statement_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:text="图书状态"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/book_statement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/address_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="90dp"
@@ -136,10 +179,10 @@
 
             <ImageView
                 android:id="@+id/book_picture"
-                android:src="@drawable/book_icon"
                 android:layout_width="90dp"
                 android:layout_height="130dp"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/book_icon" />
 
             <View
                 android:layout_width="0dp"
@@ -147,6 +190,83 @@
                 android:layout_weight="1" />
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/borrow_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/purple_500" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/confirm_borrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="确认借出"
+                    app:cornerRadius="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/up_book_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/purple_500" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="上架位置"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/book_address_to_set"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/confirm_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="确认上架"
+                        app:cornerRadius="10dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
 
 
 

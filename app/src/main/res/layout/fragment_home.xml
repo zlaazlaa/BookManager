@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,25 +15,57 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="1dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/search"
+                app:tint="@color/purple_700" />
+
+            <EditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
+                android:maxLines="1"
+                android:singleLine="true" />
+        </LinearLayout>
+
+
 
 
         <LinearLayout
-            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="6dp"
+            android:gravity="center">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="10dp"
                 android:id="@+id/button_add_book"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="添加books" />
+                android:textSize="18sp"
+                android:text="添加图书" />
 
-            <Button
+            <View
+                android:layout_width="50dp"
+                android:layout_height="0dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="10dp"
                 android:id="@+id/button_show_books"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="显示books" />
+                android:textSize="18sp"
+                android:text="刷新列表" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -40,8 +74,6 @@
             android:layout_height="wrap_content">
 
         </androidx.recyclerview.widget.RecyclerView>
-
-
 
 
     </LinearLayout>

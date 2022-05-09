@@ -3,6 +3,7 @@ package com.example.bookmanager.ui.dashboard
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -11,7 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -23,6 +26,7 @@ import com.bumptech.glide.Glide
 import com.example.bookmanager.R
 import com.example.bookmanager.SQLite.Book
 import com.example.bookmanager.SQLite.DataSelected
+import com.example.bookmanager.ShowBookSearch
 import com.example.bookmanager.databinding.FragmentDashboardBinding
 import com.example.bookmanager.normal_class.BookCardLayout
 import com.example.bookmanager.normal_class.SqliteClass
@@ -83,6 +87,20 @@ class DashboardFragment : Fragment() {
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
         return super.onCreateAnimation(transit, enter, nextAnim)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        view?.findViewById<EditText>(R.id.search_edit_text)
+            ?.setOnEditorActionListener { _, i, _ ->
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    val txt = view?.findViewById<EditText>(R.id.search_edit_text)!!.text.toString()
+                    val intent = Intent(activity, ShowBookSearch::class.java)
+                    intent.putExtra("txt", txt)
+                    startActivity(intent)
+                }
+                false
+            }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -159,6 +177,7 @@ class DashboardFragment : Fragment() {
             return ViewHolder(view)
         }
 
+        @SuppressLint("ResourceType")
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val bookType = bookTypeButton[position]
             holder.button.text = bookType.text
@@ -183,7 +202,8 @@ class DashboardFragment : Fragment() {
         bookList.clear()
         val db = dbHelper?.writableDatabase
         val cursor =
-            db?.query("Book", null, "book_type" + "=?", arrayOf(bookTypeToShow), null, null, null)
+            db?.query("Book",
+               null, "book_type" + "=?", arrayOf(bookTypeToShow), null, null, null)
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {

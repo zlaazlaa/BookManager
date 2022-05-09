@@ -2,5 +2,5 @@
     <string name="app_name">图书管理APP</string>
     <string name="title_home">图书总览</string>
     <string name="title_dashboard">分类查询</string>
-    <string name="title_notifications">借阅管理</string>
+    <string name="title_notifications">图书销毁</string>
 </resources>

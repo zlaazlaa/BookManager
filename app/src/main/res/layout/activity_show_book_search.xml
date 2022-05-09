@@ -4,43 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="7dp"
-    android:paddingRight="7dp"
-    tools:context=".ui.notifications.NotificationsFragment">
+    tools:context=".ShowBookSearch">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_height="45dp"
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/delete"
+                android:src="@drawable/search"
                 app:tint="@color/purple_700" />
 
-            <TextView
-                android:layout_gravity="center"
-                android:textSize="30sp"
-                android:text="删除图书"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
+                android:maxLines="1"
+                android:singleLine="true" />
         </LinearLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/delete_list"
+            android:id="@+id/book_list_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

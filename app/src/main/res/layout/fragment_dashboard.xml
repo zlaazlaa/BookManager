@@ -4,86 +4,124 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment">
+    tools:context=".ui.dashboard.DashboardFragment"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints"
-        android:paddingTop="10dp">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:gravity="center"
-            tools:ignore="Suspicious0dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:paddingTop="10dp"
-                android:id="@+id/book_type_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@color/purple_500">
-
-        </View>
-
-
-        <LinearLayout
-            android:id="@+id/book_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical">
+            android:layout_height="45dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/search"
+                app:tint="@color/purple_700" />
+
+            <EditText
+                android:id="@+id/search_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="图书类型:"
-                    android:textSize="22sp" />
-                <TextView
-                    android:id="@+id/book_type_to_show"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="无"
-                    android:textSize="22sp" />
-            </LinearLayout>
+                android:imeOptions="actionSearch"
+                android:maxLines="1"
+                android:singleLine="true" />
+        </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingEnd="6dp"
+                tools:ignore="Suspicious0dp">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/book_list_to_show"
-                    android:layout_width="match_parent"
+                    android:id="@+id/book_type_list"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:overScrollMode="never"
                     android:paddingTop="10dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
-            </RelativeLayout>
 
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/purple_500">
+
+            </View>
+
+
+            <LinearLayout
+                android:id="@+id/book_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:tint="@color/purple_500"
+                        android:src="@drawable/type"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="图书类型:"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/book_type_to_show"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="无"
+                        android:textSize="22sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/book_list_to_show"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </RelativeLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

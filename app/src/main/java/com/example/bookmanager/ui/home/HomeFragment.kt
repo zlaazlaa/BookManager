@@ -1,6 +1,7 @@
 package com.example.bookmanager.ui.home
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -8,11 +9,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -23,7 +27,7 @@ import com.bumptech.glide.Glide
 import com.example.bookmanager.R
 import com.example.bookmanager.SQLite.Book
 import com.example.bookmanager.SQLite.DataSelected
-import com.example.bookmanager.SQLite.MyDatabaseHelper
+import com.example.bookmanager.ShowBookSearch
 import com.example.bookmanager.databinding.FragmentHomeBinding
 import com.example.bookmanager.normal_class.AddBook
 import com.example.bookmanager.normal_class.BookCardLayout
@@ -44,6 +48,7 @@ class HomeFragment : Fragment() {
     val createTag = 0
 
     private val temp = SqliteClass()//实例化对象，为了获得静态数据
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -109,6 +114,7 @@ class HomeFragment : Fragment() {
         })
     }
 
+    @SuppressLint("Recycle", "Range")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         view?.findViewById<Button>(R.id.button_show_books)?.setOnClickListener {
@@ -118,7 +124,31 @@ class HomeFragment : Fragment() {
         }
         view?.findViewById<Button>(R.id.button_add_book)?.setOnClickListener {
             val intent = Intent(activity, AddBook::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, 222)
+        }
+
+
+        view?.findViewById<EditText>(R.id.search_edit_text)
+            ?.setOnEditorActionListener { _, i, _ ->
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    val txt = view?.findViewById<EditText>(R.id.search_edit_text)!!.text.toString()
+                    val intent = Intent(activity, ShowBookSearch::class.java)
+                    intent.putExtra("txt", txt)
+                    startActivity(intent)
+                }
+                false
+            }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            222 -> if (resultCode == RESULT_OK) {
+                activity?.let { it1 -> DataSelected().updateAllBooks(it1) }
+                bookList = DataSelected().getBookList()
+                showBookList()
+            }
         }
     }
 
@@ -162,7 +192,8 @@ class HomeFragment : Fragment() {
                     val bookPicture = cursor.getBlob(cursor.getColumnIndex("book_picture"))
                     val opts = BitmapFactory.Options()
                     opts.inJustDecodeBounds = false //为true时，返回的bitmap为null
-                    val bitmap = BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size, opts)
+                    val bitmap =
+                        BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size, opts)
                     image.setImageBitmap(bitmap)
                 } while (cursor.moveToNext())
             }
