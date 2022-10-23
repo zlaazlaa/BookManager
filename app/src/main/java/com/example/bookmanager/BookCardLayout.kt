@@ -1,12 +1,20 @@
-package com.example.bookmanager.normal_class
+package com.example.bookmanager
 
 import android.content.Context
 import android.content.Intent
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/BookCardLayout.kt
 import android.os.Build
+=======
+import android.util.AttributeSet
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/BookCardLayout.kt
 import android.view.LayoutInflater
+import android.view.View.OnClickListener
+import android.view.ViewParent
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.bookmanager.R
+import androidx.annotation.Nullable
+import androidx.appcompat.app.AppCompatActivity
 
 
 class BookCardLayout(context: Context?) :

@@ -1,8 +1,10 @@
-package com.example.bookmanager.normal_class
+package com.example.bookmanager
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Button
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -11,7 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.bookmanager.R
+import com.example.bookmanager.SQLite.MyDatabaseHelper
 import com.example.bookmanager.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

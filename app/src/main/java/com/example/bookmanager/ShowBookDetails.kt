@@ -1,4 +1,4 @@
-package com.example.bookmanager.normal_class
+package com.example.bookmanager
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -9,13 +9,17 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/ShowBookDetails.kt
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.example.bookmanager.R
 import com.example.bookmanager.normal_class.MyApplication.Companion.context
+import com.google.android.material.button.MaterialButton
+=======
+import com.example.bookmanager.MyApplication.Companion.context
 import com.example.bookmanager.SQLite.Book
 import com.example.bookmanager.SQLite.MyDatabaseHelper
-import com.google.android.material.button.MaterialButton
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/ShowBookDetails.kt
 
 class ShowBookDetails : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.example.bookmanager.normal_class
+package com.example.bookmanager
 
 import android.annotation.SuppressLint
 import android.app.Application

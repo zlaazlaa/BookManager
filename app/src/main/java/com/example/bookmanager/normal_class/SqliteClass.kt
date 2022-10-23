@@ -1,7 +1,6 @@
 package com.example.bookmanager.normal_class
 
 import androidx.fragment.app.FragmentActivity
-import com.example.bookmanager.SQLite.MyDatabaseHelper
 
 class SqliteClass {
 

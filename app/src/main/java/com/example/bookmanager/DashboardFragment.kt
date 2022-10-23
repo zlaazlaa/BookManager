@@ -1,4 +1,4 @@
-package com.example.bookmanager.ui.dashboard
+package com.example.bookmanager.normal_class
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -7,15 +7,18 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/DashboardFragment.kt
 import android.view.animation.Animation
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+=======
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/ui/dashboard/DashboardFragment.kt
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -23,13 +26,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.bookmanager.BookCardLayout
 import com.example.bookmanager.R
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/DashboardFragment.kt
+=======
 import com.example.bookmanager.SQLite.Book
-import com.example.bookmanager.SQLite.DataSelected
-import com.example.bookmanager.ShowBookSearch
+import com.example.bookmanager.SQLite.MyDatabaseHelper
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/ui/dashboard/DashboardFragment.kt
 import com.example.bookmanager.databinding.FragmentDashboardBinding
-import com.example.bookmanager.normal_class.BookCardLayout
-import com.example.bookmanager.normal_class.SqliteClass
 import com.google.android.material.button.*
 import java.io.ByteArrayOutputStream
 
@@ -42,15 +46,9 @@ class DashboardFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    val handler: Handler = Handler()
+    private val bookList = ArrayList<Book>()
 
-    private var bookList = ArrayList<Book>()
-
-    private var dbHelper = activity?.let { SqliteClass().getDbHelper(it) }
-
-    private val temp = SqliteClass()//实例化对象，为了获得静态数据
-
-    private val bookTypeButton = ArrayList<Button>()
+    private var dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,8 +60,6 @@ class DashboardFragment : Fragment() {
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        dbHelper = activity?.let { temp.getDbHelper(it) }
 
 //        val textView: TextView = binding.textDashboard
 //        dashboardViewModel.text.observe(viewLifecycleOwner) {
@@ -77,6 +73,7 @@ class DashboardFragment : Fragment() {
         _binding = null
     }
 
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/DashboardFragment.kt
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
     }
@@ -109,18 +106,22 @@ class DashboardFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+=======
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/ui/dashboard/DashboardFragment.kt
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
     }
 
     @SuppressLint("Range", "ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val db = dbHelper?.writableDatabase
+        val db = dbHelper.writableDatabase
         val hashMap = HashMap<String, Int>()
 //        val cursor = db.query("Book", arrayOf("book_type"), null, null, null, null, null)
-        val cursor = db?.rawQuery("SELECT DISTINCT book_type FROM Book", null)
+        val cursor = db.rawQuery("SELECT DISTINCT book_type FROM Book", null)
         var count = 0
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/DashboardFragment.kt
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
@@ -185,23 +186,37 @@ class DashboardFragment : Fragment() {
                 val text = holder.button.text
 
                 handler.post(Runnable { //这里写你原来要执行的业务逻辑
+=======
+        if (cursor.moveToFirst()) {
+            do {
+                val bookType = cursor.getString(cursor.getColumnIndex("book_type"))
+                if (count == 0) {
+                    showTypeList(bookType)
+                    count++
+                }
+                val btn = activity?.let { MaterialButton(it) }
+                btn?.text = bookType
+                btn?.id = count
+                btn?.textSize = 20F
+                btn?.setOnClickListener {
+                    val text = btn.text
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/ui/dashboard/DashboardFragment.kt
                     showTypeList(text as String)
-                })
-            }
-        }
+                }
+                view.findViewById<LinearLayout>(R.id.book_type_list).addView(btn)
 
-        override fun getItemCount(): Int {
-            return bookTypeButton.size
+            } while (cursor.moveToNext())
         }
+        cursor.close()
     }
-
 
     @SuppressLint("Range", "Recycle")
     fun showTypeList(bookTypeToShow: String) {
         view?.findViewById<TextView>(R.id.book_type_to_show)?.text = bookTypeToShow
         bookList.clear()
-        val db = dbHelper?.writableDatabase
+        val db = dbHelper.writableDatabase
         val cursor =
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/DashboardFragment.kt
             db?.query("Book",
                null, "book_type" + "=?", arrayOf(bookTypeToShow), null, null, null)
         if (cursor != null) {
@@ -226,9 +241,32 @@ class DashboardFragment : Fragment() {
                             bookStatement,
                             bookPictureBitmap
                         )
+=======
+            db.query("Book", null, "book_type" + "=?", arrayOf(bookTypeToShow), null, null, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndex("id"))
+                val bookName = cursor.getString(cursor.getColumnIndex("book_name"))
+                val authorName = cursor.getString(cursor.getColumnIndex("author_name"))
+                val bookType = cursor.getString(cursor.getColumnIndex("book_type"))
+                val bookAddress = cursor.getString(cursor.getColumnIndex("book_address"))
+                val bookStatement = cursor.getInt(cursor.getColumnIndex("book_statement"))
+                val bookPicture = cursor.getBlob(cursor.getColumnIndex("book_picture"))
+                val bookPictureBitmap =
+                    BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size)
+                bookList.add(
+                    Book(
+                        id,
+                        bookName,
+                        authorName,
+                        bookType,
+                        bookAddress,
+                        bookStatement,
+                        bookPictureBitmap
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/ui/dashboard/DashboardFragment.kt
                     )
-                } while (cursor.moveToNext())
-            }
+                )
+            } while (cursor.moveToNext())
         }
         val layoutManager = LinearLayoutManager(activity)
         val recyclerView: RecyclerView =
@@ -246,18 +284,17 @@ class DashboardFragment : Fragment() {
 //        val width = wm.defaultDisplay.width
 //        val height = wm.defaultDisplay.height
 //        image.layoutParams = ViewGroup.LayoutParams(1080, 1920)
-        val db = dbHelper?.writableDatabase
-        val cursor = db?.rawQuery("select * from book where id = ?", arrayOf(id))
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
-                    val bookPicture = cursor.getBlob(cursor.getColumnIndex("book_picture"))
-                    val opts = BitmapFactory.Options()
-                    opts.inJustDecodeBounds = false //为true时，返回的bitmap为null
-                    val bitmap = BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size, opts)
-                    image1212.setImageBitmap(bitmap)
-                } while (cursor.moveToNext())
-            }
+        val dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
+        val db = dbHelper.writableDatabase
+        val cursor = db.rawQuery("select * from book where id = ?", arrayOf(id))
+        if (cursor.moveToFirst()) {
+            do {
+                val bookPicture = cursor.getBlob(cursor.getColumnIndex("book_picture"))
+                val opts = BitmapFactory.Options()
+                opts.inJustDecodeBounds = false //为true时，返回的bitmap为null
+                val bitmap = BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size, opts)
+                image1212.setImageBitmap(bitmap)
+            } while (cursor.moveToNext())
         }
 
         dialog?.setContentView(image1212)

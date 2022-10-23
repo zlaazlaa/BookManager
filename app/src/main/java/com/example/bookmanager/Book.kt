@@ -1,4 +1,4 @@
-package com.example.bookmanager.SQLite
+package com.example.bookmanager.normal_class
 
 import android.graphics.Bitmap
 import java.sql.Blob

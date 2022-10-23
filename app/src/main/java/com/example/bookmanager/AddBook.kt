@@ -1,4 +1,4 @@
-package com.example.bookmanager.normal_class
+package com.example.bookmanager
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -8,6 +8,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
@@ -17,6 +18,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -26,10 +28,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.updateLayoutParams
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/AddBook.kt
 import com.example.bookmanager.R
+=======
 import com.example.bookmanager.SQLite.MyDatabaseHelper
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/AddBook.kt
 import com.google.android.material.button.MaterialButton
 import java.io.ByteArrayOutputStream
 import java.io.File

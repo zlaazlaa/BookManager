@@ -1,4 +1,4 @@
-package com.example.bookmanager.ui.notifications
+package com.example.bookmanager.normal_class
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -18,13 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bookmanager.R
-import com.example.bookmanager.SQLite.Book
-import com.example.bookmanager.SQLite.DataSelected
-import com.example.bookmanager.SQLite.MyDatabaseHelper
 import com.example.bookmanager.databinding.FragmentNotificationsBinding
-import com.example.bookmanager.normal_class.BookCardLayout
-import com.example.bookmanager.normal_class.BookCardLayout2
-import com.example.bookmanager.normal_class.SqliteClass
 import java.io.ByteArrayOutputStream
 
 class NotificationsFragment : Fragment() {

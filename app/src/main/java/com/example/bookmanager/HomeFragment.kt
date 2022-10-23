@@ -1,15 +1,15 @@
-package com.example.bookmanager.ui.home
+package com.example.bookmanager.normal_class
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,42 +19,50 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.GlideDrawable
+import com.bumptech.glide.request.target.Target
+import com.example.bookmanager.AddBook
+import com.example.bookmanager.BookCardLayout
 import com.example.bookmanager.R
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/HomeFragment.kt
+=======
 import com.example.bookmanager.SQLite.Book
-import com.example.bookmanager.SQLite.DataSelected
-import com.example.bookmanager.ShowBookSearch
+import com.example.bookmanager.SQLite.MyDatabaseHelper
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/ui/home/HomeFragment.kt
 import com.example.bookmanager.databinding.FragmentHomeBinding
-import com.example.bookmanager.normal_class.AddBook
-import com.example.bookmanager.normal_class.BookCardLayout
-import com.example.bookmanager.normal_class.SqliteClass
 import java.io.ByteArrayOutputStream
+import java.nio.ByteBuffer
 
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    private val handler: Handler = Handler()
+    private val bookList = ArrayList<Book>()
 
-    private var bookList = ArrayList<Book>()
 
-    private var dbHelper = activity?.let { SqliteClass().getDbHelper(it) }
+    private var dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
 
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/HomeFragment.kt
     val createTag = 0
 
     private val temp = SqliteClass()//实例化对象，为了获得静态数据
 
+=======
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/ui/home/HomeFragment.kt
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
     }
 
     override fun onCreateView(
@@ -68,26 +76,15 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-        activity?.let { temp.getDbHelper(it) }
-        dbHelper = activity?.let { temp.getDbHelper(it) }
 //        val textView: TextView = binding.textHome
 //        homeViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
 
-        handler.post(Runnable { //这里写你原来要执行的业务逻辑
-            bookList = DataSelected().getBookList()
-        })
+        getBookList()
 
 
         return root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        activity?.let { it1 -> DataSelected().updateAllBooks(it1) }
-        bookList = DataSelected().getBookList()
-        super.onCreate(savedInstanceState)
     }
 
     override fun onDestroyView() {
@@ -95,31 +92,23 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        showBookList()
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        handler.post(Runnable { //这里写你原来要执行的业务逻辑
-//            showBookList()
-        })
+        getBookList()
+        showBookList()
     }
 
     override fun onResume() {
         super.onResume()
-        handler.post(Runnable { //这里写你原来要执行的业务逻辑
-//            showBookList()
-        })
+        getBookList()
+        showBookList()
     }
 
     @SuppressLint("Recycle", "Range")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         view?.findViewById<Button>(R.id.button_show_books)?.setOnClickListener {
-            activity?.let { it1 -> DataSelected().updateAllBooks(it1) }
-            bookList = DataSelected().getBookList()
+            getBookList()
             showBookList()
         }
         view?.findViewById<Button>(R.id.button_add_book)?.setOnClickListener {
@@ -153,12 +142,44 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        handler.post(Runnable { //这里写你原来要执行的业务逻辑
-//            showBookList()
-        })
+        getBookList()
+        showBookList()
         return super.onCreateAnimation(transit, enter, nextAnim)
     }
 
+    @SuppressLint("Range")
+    fun getBookList() {
+        bookList.clear()
+        val db = dbHelper.writableDatabase
+        val allBooks = db.query("Book", null, null, null, null, null, null)
+        if (allBooks != null) {
+            if (allBooks.moveToFirst()) {
+                do {
+                    val id = allBooks.getInt(allBooks.getColumnIndex("id"))
+                    val bookName = allBooks.getString(allBooks.getColumnIndex("book_name"))
+                    val authorName = allBooks.getString(allBooks.getColumnIndex("author_name"))
+                    val bookType = allBooks.getString(allBooks.getColumnIndex("book_type"))
+                    val bookAddress = allBooks.getString(allBooks.getColumnIndex("book_address"))
+                    val bookStatement = allBooks.getInt(allBooks.getColumnIndex("book_statement"))
+                    val bookPicture = allBooks.getBlob(allBooks.getColumnIndex("book_picture"))
+                    val bookPictureBitmap =
+                        BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size)
+                    bookList.add(
+                        Book(
+                            id,
+                            bookName,
+                            authorName,
+                            bookType,
+                            bookAddress,
+                            bookStatement,
+                            bookPictureBitmap
+                        )
+                    )
+                } while (allBooks.moveToNext())
+                allBooks.close()
+            }
+        }
+    }
 
     private fun showBookList() {
         val layoutManager = LinearLayoutManager(activity)
@@ -168,22 +189,13 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         val adapter = BookAdapter(bookList)
         recyclerView.adapter = adapter
-        //下面是滑动时Glide停止加载，好像用处不大
-//        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                    Glide.with(activity).resumeRequests() //恢复Glide加载图片
-//                } else {
-//                    Glide.with(activity).pauseRequests() //禁止Glide加载图片
-//                }
-//            }
-//        })
     }
 
     @SuppressLint("Recycle", "Range")
     private fun bigImageLoader(id: String) {
         val dialog = activity?.let { Dialog(it) }
         val image = ImageView(context)
+<<<<<<< HEAD:app/src/main/java/com/example/bookmanager/normal_class/HomeFragment.kt
         val db = dbHelper?.writableDatabase
         val cursor = db?.rawQuery("select * from book where id = ?", arrayOf(id))
         if (cursor != null) {
@@ -197,6 +209,19 @@ class HomeFragment : Fragment() {
                     image.setImageBitmap(bitmap)
                 } while (cursor.moveToNext())
             }
+=======
+        val dbHelper = MyDatabaseHelper(activity, "BookStore.db", 2)
+        val db = dbHelper.writableDatabase
+        val cursor = db.rawQuery("select * from book where id = ?", arrayOf(id))
+        if (cursor.moveToFirst()) {
+            do {
+                val bookPicture = cursor.getBlob(cursor.getColumnIndex("book_picture"))
+                val opts = BitmapFactory.Options()
+                opts.inJustDecodeBounds = false //为true时，返回的bitmap为null
+                val bitmap = BitmapFactory.decodeByteArray(bookPicture, 0, bookPicture.size, opts)
+                image.setImageBitmap(bitmap)
+            } while (cursor.moveToNext())
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化):app/src/main/java/com/example/bookmanager/ui/home/HomeFragment.kt
         }
 
         dialog?.setContentView(image)

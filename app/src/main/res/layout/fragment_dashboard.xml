@@ -4,20 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment"
+    tools:context=".normal_class.DashboardFragment"
     android:paddingLeft="7dp"
     android:paddingRight="7dp">
 
     <LinearLayout
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
+=======
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/book_type_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            tools:ignore="Suspicious0dp">
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/book_list"
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化)
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:orientation="horizontal">
 
+<<<<<<< HEAD
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -55,6 +78,23 @@
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
                     android:paddingTop="10dp">
+=======
+            <TextView
+                android:id="@+id/book_type_to_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="图书类型"
+                android:textSize="25dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/book_list_to_show"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化)
 
                 </androidx.recyclerview.widget.RecyclerView>
 

@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">图书管理APP</string>
+<<<<<<< HEAD
     <string name="title_home">图书总览</string>
     <string name="title_dashboard">分类查询</string>
     <string name="title_notifications">图书销毁</string>
+=======
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+>>>>>>> parent of db14b7a (列表更完善，数据库加载优化)
 </resources>

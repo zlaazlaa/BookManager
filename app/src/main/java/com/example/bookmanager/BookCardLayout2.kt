@@ -3,12 +3,9 @@ package com.example.bookmanager.normal_class
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.bookmanager.R
-import com.example.bookmanager.SQLite.DataSelected
-import com.example.bookmanager.SQLite.MyDatabaseHelper
 
 class BookCardLayout2(context: Context?) :
     LinearLayout(context) {

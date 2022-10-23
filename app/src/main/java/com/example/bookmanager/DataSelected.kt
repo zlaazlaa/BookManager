@@ -1,10 +1,8 @@
-package com.example.bookmanager.SQLite
+package com.example.bookmanager.normal_class
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.BitmapFactory
 import androidx.fragment.app.FragmentActivity
-import com.example.bookmanager.normal_class.SqliteClass
 
 class DataSelected {
     private lateinit var dbHelper: MyDatabaseHelper
